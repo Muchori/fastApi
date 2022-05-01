@@ -3,7 +3,7 @@ from fastapi import status, HTTPException, Depends, APIRouter
 
 from typing import List
 
-from ..import models, schemas
+from ..import models, schemas, oauth2
 from ..database import get_db
 
 
@@ -14,7 +14,7 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=List[schemas.PostResponse])
-def get_post(db: Session = Depends(get_db)):
+def get_post(db: Session = Depends(get_db), user_id: str = Depends(oauth2.get_current_user)):
   posts = db.query(models.Post).all()
   # posts = cursor.execute(""" SELECT * FROM posts """)
   # cursor.fetchall()
@@ -22,7 +22,11 @@ def get_post(db: Session = Depends(get_db)):
   return posts
 
 @router.post("/create", status_code = status.HTTP_201_CREATED, response_model=schemas.PostResponse)
-def create_post(post: schemas.PostCreate, db: Session = Depends(get_db)):
+def create_post(
+  post: schemas.PostCreate, 
+  db: Session = Depends(get_db), 
+  user_id: str = Depends(oauth2.get_current_user)):
+
   new_post = models.Post(
     **post.dict()
   )
@@ -38,7 +42,7 @@ def create_post(post: schemas.PostCreate, db: Session = Depends(get_db)):
   return  new_post  
 
 @router.get("/{id}", response_model=schemas.PostResponse)
-def get_post(id, db: Session = Depends(get_db)):
+def get_post(id, db: Session = Depends(get_db), user_id: str = Depends(oauth2.get_current_user)):
   post = db.query(models.Post).filter(models.Post.id == id).first()
   # cursor.execute(""" SELECT * FROM posts WHERE id = %s """, (id,))
   # post = cursor.fetchone() 
@@ -48,7 +52,7 @@ def get_post(id, db: Session = Depends(get_db)):
   return post
 
 @router.delete("/{id}", status_code = status.HTTP_204_NO_CONTENT)
-def delete_post(id, db: Session = Depends(get_db)):
+def delete_post(id, db: Session = Depends(get_db), user_id: str = Depends(oauth2.get_current_user)):
   # cursor.execute(""" DELETE FROM posts WHERE id = %s returning * """, (id,)) 
   # delete_post = cursor.fetchone()
   # conn.commit()  
@@ -65,7 +69,10 @@ def delete_post(id, db: Session = Depends(get_db)):
   }
 
 @router.put("/update/{id}", response_model=schemas.PostResponse)
-def update_post(id, updated_post: schemas.PostCreate, db: Session = Depends(get_db)):
+def update_post(
+  id, updated_post: schemas.PostCreate, 
+  db: Session = Depends(get_db), 
+  user_id: str = Depends(oauth2.get_current_user)):
   # cursor.execute(""" UPDATE posts set title = %s, content = %s, published = %s where id = %s RETURNING * """, 
   # (post.title, post.content, post.published, (id),))
   # updated_post= cursor.fetchone()
