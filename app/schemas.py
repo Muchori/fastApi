@@ -17,7 +17,7 @@ class UserResponse(BaseModel):
   created_at: datetime
   class Config:
     orm_mode = True
-    
+
 class PostResponse(PostBase):
   id: str
   created_at: datetime
@@ -25,7 +25,7 @@ class PostResponse(PostBase):
   owner: UserResponse ## returns a pydantic type response in post response
   class Config:
     orm_mode = True
-    
+
 class UserCreate(BaseModel):
   email: EmailStr
   password: str

@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
 from fastapi import status, HTTPException, Depends, APIRouter
 
-from typing import List
+
+from typing import List, Optional
 
 from ..import models, schemas, oauth2
 
@@ -15,9 +16,20 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=List[schemas.PostResponse])
-def get_post(db: Session = Depends(get_db), current_user: str = Depends(oauth2.get_current_user)):
-  posts = db.query(models.Post).all()
+def get_post(
+  db: Session = Depends(get_db), 
+  current_user: str = Depends(oauth2.get_current_user), 
+  limit: int = 10, 
+  skip: int = 0,
+  search: Optional[str] = ""):
 
+  ## 
+  # querying post py filter using limit, 
+  # search using the title string and 
+  # skip for pagination
+  # 
+  # ##
+  posts = db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
   ## getting post fr current logged in user
   ##posts = db.query(models.Post).filter(models.Post.owner_id == current_user.id).all()
   # posts = cursor.execute(""" SELECT * FROM posts """)
