@@ -1,9 +1,11 @@
 from sqlalchemy.orm import Session
 from fastapi import status, HTTPException, Depends, APIRouter
 
+
 from typing import List, Optional
 
 from ..import models, schemas, oauth2
+
 from ..database import get_db
 
 
@@ -28,7 +30,6 @@ def get_post(
   # 
   # ##
   posts = db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
-
   ## getting post fr current logged in user
   ##posts = db.query(models.Post).filter(models.Post.owner_id == current_user.id).all()
   # posts = cursor.execute(""" SELECT * FROM posts """)

@@ -4,7 +4,6 @@ from sqlalchemy.orm import sessionmaker
 
 from . config import settings
 
-
 SQLALCHEMY_DATABASE_URL = settings.database_connection_string
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
@@ -29,3 +28,4 @@ def get_db():
 #   cursor = conn.cursor()
 # except Exception as error:
 #   print("Connect to a database: ", error)
+
