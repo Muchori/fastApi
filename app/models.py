@@ -28,8 +28,6 @@ class Post(Base):
   ## creating the relationship with user table
   owner = relationship("User")
 
-
-
 class User(Base):
   __tablename__ = "users"
 
@@ -37,3 +35,9 @@ class User(Base):
   email = Column(String, nullable=False, unique=True)
   password = Column(String, nullable=True)
   created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default= text('now()'))
+
+class Vote(Base):
+  __tablename__ = "votes"
+
+  user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), primary_key = True)
+  post_id = Column(String, ForeignKey("posts.id", ondelete="CASCADE"), primary_key = True)
