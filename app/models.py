@@ -1,10 +1,12 @@
-
-import email
-from enum import unique
 from .database import Base
+
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean
+
+from sqlalchemy.orm import relationship
+
 from sqlalchemy.sql.expression import text
-from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.sql.sqltypes import TIMESTAMP
+
 import uuid
 
 #generating unique uuid function
@@ -19,7 +21,11 @@ class Post(Base):
   content = Column(String, nullable=False)
   published = Column(Boolean, server_default="TRUE", nullable=False)
   rating = Column(Integer, nullable=True)
+  owner_id = Column(String, ForeignKey("users.id", ondelete = "CASCADE"), nullable = False)
   created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default= text('now()'))
+
+  ## creating the relationship with user table
+  owner = relationship("User")
 
 
 
