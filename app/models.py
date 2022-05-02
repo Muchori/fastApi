@@ -1,3 +1,4 @@
+
 from .database import Base
 
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean
@@ -21,6 +22,7 @@ class Post(Base):
   content = Column(String, nullable=False)
   published = Column(Boolean, server_default="TRUE", nullable=False)
   rating = Column(Integer, nullable=True)
+  ## foreign key in post table 
   owner_id = Column(String, ForeignKey("users.id", ondelete = "CASCADE"), nullable = False)
   created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default= text('now()'))
 
