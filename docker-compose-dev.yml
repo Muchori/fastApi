@@ -1,0 +1,27 @@
+version: "3"
+services:
+  api:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/home/muchori/projects/fastApi:ro
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      - DATABASE_CONNECTION_STRING = postgresql://postgres:727597051020@db.dcwjrqbghffburtaocxi.supabase.co:5432/postgres
+      - SECRET_KEY = 9512212bb10e93449c97db39129920d961470107fb703946f194f51826cd99e17f1f88a3d899cd3cdb85e2564158ad39ce1534742d1ac470e73775a53313d9c4
+      - ALGORITHM = HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES = 60
+
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=fastapi
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+volumes:
+  postgres-db:
