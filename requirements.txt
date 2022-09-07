@@ -58,7 +58,7 @@ starlette==0.16.0
 supabase==0.0.3
 toml==0.10.2
 typing_extensions==4.0.0
-ujson==4.3.0
+ujson==5.4.0
 urllib3==1.26.7
 uvicorn==0.15.0
 uvloop==0.16.0
