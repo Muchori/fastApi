@@ -1,3 +1,3 @@
 # FastApi
 
-A spimple REST API using FastApi and Alembic as ORM for data persistency 
+A simple REST API using FastApi and Alembic as ORM for data persistency 
