@@ -2,7 +2,7 @@ alembic==1.7.7
 anyio==3.4.0
 asgiref==3.4.1
 attrs==21.2.0
-bcrypt==3.2.0
+bcrypt==3.2.2
 certifi==2023.7.22
 cffi==1.15.0
 chardet==4.0.0
