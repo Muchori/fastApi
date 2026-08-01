@@ -37,7 +37,7 @@ psycopg==3.0.12
 psycopg-binary==3.0.12
 psycopg2==2.9.3
 py==1.11.0
-pyasn1==0.4.8
+pyasn1==0.6.4
 pycparser==2.21
 pydantic==1.8.2
 pyparsing==3.0.6
