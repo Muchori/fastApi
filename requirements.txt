@@ -1,4 +1,4 @@
-alembic==1.7.7
+alembic==1.19.2
 anyio==3.4.0
 asgiref==3.4.1
 attrs==21.2.0
